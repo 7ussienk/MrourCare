@@ -1,0 +1,41 @@
+   var obj = { status: false, ele: null };
+function DeleteConfirm(btnDelete) {
+
+    if (obj.status) {
+        obj.status = false;
+        return true;
+    };
+
+  
+         Swal.fire({
+  title: "هل تريد الاستمرار؟",
+  icon: "question",
+  iconHtml: "؟",
+  confirmButtonText: "نعم",
+  cancelButtonText: "لا",
+  showCancelButton: true,
+  showCloseButton: true
+}).then((result) => {
+                if (result.value) {
+                    obj.status = true;
+                    //do postback on success
+
+                    Swal.fire({
+      title: "! الحذف",
+      text: "تم حذف ملفك بنجاح.",
+      icon: "success"
+    });
+
+                       setTimeout(function() {
+        obj.ele.click();
+    }, 3000);
+
+                }
+            });
+            obj.ele = btnDelete;
+            return false;
+        }
+
+
+=================
+OnClientClick="return DeleteConfirm(this);"

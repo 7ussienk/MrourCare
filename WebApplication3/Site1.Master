@@ -1,0 +1,489 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site1.master.cs" Inherits="WebApplication3.Site1" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <link rel="shortcut icon" href="images/logo.png" type="image/x-icon" />
+    <title>مرور كير : <%:Page.Title %></title>
+    <!-- font-awesome -->
+    <link href="font-awesome/all.min.css" rel="stylesheet" />
+    <!-- bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/sweetalert2.min.css" rel="stylesheet" />
+    <style>
+        body {
+            font-family: "alfont_com_Cairo-Regular";
+            src: url("fonts/alfont_com_Cairo-Regular.ttf");
+        }
+
+        li {
+        }
+
+        .ul0 li {
+            font-size: 17px;
+        }
+
+        .ul2 {
+            float: left;
+        }
+
+        navbar {
+            background: #000e29;
+        }
+
+        .menu-1, .menu-5 {
+            background: #4A148C;
+        }
+
+        .menu-2, .menu-4 {
+        }
+
+        .menu-3 {
+            background: #7B1FA2;
+        }
+
+        .menus ul {
+            list-style: none;
+            padding: 0;
+            margin-top: -10px;
+            text-align: center;
+            color: white;
+        }
+
+        .menus li {
+            display: inline-block;
+        }
+
+
+
+        .menu ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        .menu li {
+            display: inline-block;
+        }
+
+        .menu a {
+            text-transform: uppercase;
+            text-decoration: none;
+            color: #fff;
+            display: block;
+            position: relative;
+            padding: 4px 0;
+        }
+
+            .menu a::before {
+                content: "";
+                width: 100%;
+                height: 4px;
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                background: #fff;
+                transition: 0.5s transform ease;
+                transform: scale3d(0,1,1);
+                transform-origin: 0 50%;
+            }
+
+            .menu a:hover::before {
+                transform: scale3d(1,1,1);
+            }
+
+        .menu-1 a::before {
+            background: #E91E63;
+            transform-origin: 100% 50%;
+        }
+
+        .menu-1 a:hover::before {
+            transform-origin: 0 50%;
+        }
+
+        .menu-2 a::before {
+            background: #EC407A;
+        }
+
+        .menu-3 a::before {
+            transform-origin: 50% 50%;
+            background: #F06292;
+        }
+
+        .menu-4 a::before {
+            transform-origin: 100% 50%;
+            background: black;
+        }
+    </style>
+    <script>
+        var obj = { status: false, ele: null };
+        function upDate(btnDelete) {
+            if (obj.status) {
+                obj.status = false;
+                return true;
+            };
+            Swal.fire({
+                title: "هل انت متاكد تريد تسجيل الخروج؟",
+                icon: "question",
+                iconHtml: "؟",
+                confirmButtonText: "نعم",
+               
+                denyButtonText: 'الغاء',
+                showDenyButton: true,
+             
+                showCloseButton: true,
+                customClass: {
+                    actions: 'my-actions',
+                    confirmButton: 'order-3',
+                    
+                    denyButton: 'order-1',
+                },
+
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    obj.status = true;
+                    obj.ele.click();
+                } else if (result.isDenied) {
+                    Swal.fire('لم يتم تحديث تغييراتك', '', 'info')
+                }
+            });
+            obj.ele = btnDelete;
+            return false;
+        }
+
+    </script>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <script src="css/sweet.js"></script>
+    <div class="text-start">
+        <form id="form1" runat="server">
+            <div>
+                <script src="font-awesome/all.min.js"></script>
+                <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-lg" dir="rtl">
+                    <div class="container-fluid">
+                        <a class="navbar-brand" href="#"></a>
+                        <div>
+                             <a href="Main.aspx"> 
+                            <asp:Image ID="Image1" runat="server" ImageUrl="~/images/logo.png" Style="width: 30px;" />
+                             </a>
+                            <a class="navbar-brand" href="Main.aspx"><b>مــرور كــير</b></a>
+                        </div>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+
+                        <div class="collapse navbar-collapse" id="navbarNav">
+
+                            <ul class="navbar-nav justify-content-end menu menu-4 ul0" style="text-align: right;
+                                font-size: 5px;">
+                                <li id="id1">
+                                    <asp:LinkButton ID="LinkButton5" runat="server" PostBackUrl="~/Main.aspx" CssClass="text-decoration-none py-2 d-block "
+                                        ForeColor="Black">
+                                        <i class="fa-solid fa-house-chimney px-3" id="txtValue" runat="server"></i>الصفحة
+                                        الرئيسية
+                                    </asp:LinkButton></li>
+                                <li id="id2">
+                                    <asp:LinkButton ID="LinkButton6" runat="server" PostBackUrl="~/requires.aspx" CssClass="text-decoration-none px-1 py-2 d-block"
+                                        ForeColor="Black" Visible="false">
+                                        <i class="fa-solid fa-chart-simple px-3"></i>الاستعلامات</asp:LinkButton>
+                                </li>
+                                <li id="id9">
+                                    <asp:LinkButton ID="LinkButton8" runat="server" PostBackUrl="~/Operations.aspx" Visible="false"
+                                        CssClass="text-decoration-none px-1 py-2 d-block" ForeColor="Black">
+                                        <i class="fa-solid fa-magnifying-glass-chart px-3"></i>تدقيق العمليات</asp:LinkButton>
+                                </li>
+                                <li id="id9">
+                                    <asp:LinkButton ID="ReviewTheDaysOfWeek" runat="server" PostBackUrl="~/ReviewTheDaysOfWeek.aspx"
+                                        Visible="false"
+                                        CssClass="text-decoration-none px-1 py-2 d-block" ForeColor="Black">
+                                        <i class="fa-solid fa-business-time px-3"></i>الحجوزات</asp:LinkButton>
+                                </li>
+                                <li id="id8">
+                                    <asp:LinkButton ID="LinkButton4" runat="server" PostBackUrl="~/BookAppoForAdmin.aspx"
+                                        Visible="false" CssClass="text-decoration-none px-1 py-2 d-block" ForeColor="Black">
+                                        <i class="fa-solid fa-clock px-3"></i>أدارة المواعيد</asp:LinkButton>
+                                </li>
+                                <li id="id20">
+                                    <asp:LinkButton ID="LinkButton1" runat="server" PostBackUrl="~/Qoiuz.aspx"
+                                        Visible="false" CssClass="text-decoration-none px-1 py-2 d-block" ForeColor="Black">
+                                        <i class="fa-solid fa-traffic-light px-3"></i>اختبار الارشادات</asp:LinkButton>
+                                </li>
+
+                                <li id="id3">
+                                    <asp:LinkButton ID="LinkButton7" runat="server" PostBackUrl="~/AccountManagement.aspx"
+                                        Visible="false" CssClass="text-decoration-none px-1 py-2 d-block" ForeColor="Black">
+                                        <i class="fa-solid fa-user-pen px-3"></i>أدارة العضويات</asp:LinkButton>
+                                </li>
+                                <li id="id10">
+                                    <asp:LinkButton ID="LinkButton11" runat="server" PostBackUrl="~/team.aspx" CssClass="text-decoration-none px-1 py-2 d-block"
+                                        ForeColor="Black">
+                                        <i class="fa-solid fa-people-group px-3"></i>من نخنُ</asp:LinkButton></li>
+                                <li id="id6">
+                                    <asp:LinkButton ID="LinkButton2" runat="server" PostBackUrl="~/info.aspx" CssClass="text-decoration-none px-1 py-2 d-block"
+                                        ForeColor="Black">
+                                        <i class="fa-solid fa-circle-info px-3"></i>التعليمات</asp:LinkButton></li>
+                            </ul>
+
+
+                        </div>
+                        <div class="collapse navbar-collapse justify-content-end" id="navbarNav" style="text-align: right">
+                            <ul class="navbar-nav menu menu-4 ul0" id="ul2">
+
+                                <li id="">
+                                    <asp:LinkButton ID="LinkButton3" runat="server" PostBackUrl="~/login.aspx" CssClass="text-decoration-none px-1 py-2 d-block"
+                                        ForeColor="Black">
+                                        <i class="fa-solid fa fa-sign-in  px-3 "></i>دخول/تسجيل</asp:LinkButton>
+                                </li>
+                                <li id="">
+                                    <asp:LinkButton ID="LinkButton10" runat="server" PostBackUrl="~/UpdateAccountManagement.aspx"
+                                        CssClass="text-decoration-none px-1 py-2 d-block" ForeColor="Black" OnClick="linkLogOut_Click">
+                                        <i class="fa-solid fa fa-gears px-3 "></i>إدارة الحساب</asp:LinkButton></li>
+                                <li id="">
+                                    <asp:LinkButton ID="LinkButton9" runat="server" CssClass="text-decoration-none px-1 py-2 d-block"
+                                        ForeColor="Black" OnClick="linkLogOut_Click" OnClientClick="return upDate(this)">
+                                        <i class="fa-solid fa fa-sign-out px-3 "></i>خروج</asp:LinkButton></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+
+                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                    <!-- محتوى الصفحات الاخرى  -->
+                </asp:ContentPlaceHolder>
+            </div>
+        </form>
+        <!-- Bootstrap Js -->
+        <script src="bootstrap/bootstrap.js"></script>
+        <!-- Font Awesome Js -->
+        <script src="font-awesome/all.min.js"></script>
+        <!-- Jquery -->
+        <script src="js/jquery-3.6.0.min.js"></script>
+    </div>
+    <!-- للخط الأنسان غايتنا وهدفنا -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        footer {
+            padding: 15px 0;
+            background-color: #fff;
+            text-align: center;
+        }
+
+            footer h5 {
+                margin-bottom: 17px;
+                color: white;
+            }
+
+            footer ul {
+                list-style: none;
+                padding: 0;
+                display: inline-block;
+                margin-right: -30px;
+                margin-bottom: 10px;
+            }
+
+                footer ul li {
+                    margin: 5px 10px;
+                }
+
+                    footer ul li a {
+                        color: white;
+                        text-decoration: none;
+                    }
+
+
+
+        .map {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        footer hr {
+            border-top: 1px solid #ccc;
+            margin-bottom: 10px;
+        }
+
+        footer p {
+            color: #666;
+            font-size: 30px;
+            font-family: "Aref Ruqaa", serif;
+            font-style: normal;
+        }
+
+        footer strong {
+            color: white;
+            margin-bottom: 25px;
+        }
+    </style>
+    <div class="bg-elegant" style="background-color: #2E2E2E !important">
+        <hr style="margin-bottom: 20px; background-color: #2E2E2E !important" />
+        <footer class="" style="background-color: #2E2E2E !important">
+            <div class="container col-sm-12 text-white">
+                <div class="row text-center ">
+                    <div class=" col-md-4  text-white">
+                        <h5 class="text-white"><b>مرور كير</b></h5>
+                        <p class="text-white">الأنسان غايتنا وهدفنا</p>
+                        <div class="map col-sm-4 ">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1918.1202471222516!2d48.81143749999999!3d15.948812499999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3de6a37c84c4552d%3A0x8ad9e4c692b536eb!2z2YjYstin2LHYqSDYp9mE2K_Yp9iu2YTZitip!5e0!3m2!1sar!2s!4v1711866711827!5m2!1sar!2s"
+                                width="" height="" style="" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
+                        </div>
+                    </div>
+                    <div class="col-md-4 zoomOutRight " style="color: white;">
+                        <h5 class="text-white"><b>    الــخــدمــات    </b></h5>
+                        <ul class="text-white">
+                            <li><a href="TrafficSigns.aspx">الأرشادات الأرشادية</a></li>
+                            <li><a href="NewNumberL.aspx">صرف رقم جديد</a></li>
+                            <li><a href="changeowner.aspx">نقل ملكية آلية</a></li>
+                            <li><a href="Newliesen.aspx">رخصة جديدة</a></li>
+                            <li><a href="RenewLicense.aspx">تجديد رخصة قيادة</a></li>
+                            <li><a href="https://mail.google.com/mail/?view=cm&to=abod.67045@gmail.com/">الدعم الفني</a>
+                            </li>
+                            <li>
+                                <div align="center">
+                                    <div class="  ">
+                                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                            aria-hidden="true">
+                                            <div class="modal-dialog  modal-dialog-scrollable">
+                                                <div class="modal-content">
+                                                    <div class="modal-header " style=" color: black;" dir="rtl">
+                                                        <div>
+                                                            <h1 class="" id="exampleModalLabel" >تقديم شكوى | إقتراح       </h1>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <div class="modal-body " style="direction: rtl; color:black;">
+                                                            <h3 class="  fs-5 " id="exampleModalLabel">قم بكتابة الشكوى او الاقتراح من فضلك ثم اضغط
+                                                                زر الارسال : </h3>
+                                                            <h4><b>محتوى الرسالة</b></h4>
+                                                            <br />
+                                                            <div class="form-group  " style="text-align: right;">
+                                                                <textarea class="form-control" id="message" rows="12"></textarea>
+                                                                <div id="statusMessage" style="text-align: right;"></div>
+                                                                <!-- العنصر الذي سيعرض حالة رسالة الطلب -->
+                                                            </div>
+                                                        </div>
+                                                        <div class="centered-bottom">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
+                                                            <button type="button" id="send_message" class="btn btn-primary">إرسال</button>
+                                                            <br />
+                                                            <br />
+                                                        </div>
+                                                        <script>
+                                                            var btn = document.getElementById("send_message");
+                                                            btn.addEventListener("click", function () {
+                                                                event.preventDefault(); // منع الإرسال الافتراضي للنموذج
+                                                                btn.classList.remove("btn-primary");
+                                                                btn.classList.add("btn-danger");
+                                                                var messageInput = document.getElementById("message").value;
+                                                                var token = "6763917046:AAHReW5a-GtekRsrHxc-0_DG4s_Vgu_mqBI";
+                                                                var chatId = "-1002124319324";
+                                                                var message = messageInput
+
+                                                                var statusMessage = document.getElementById("statusMessage");
+                                                                statusMessage.classList.remove("text-success");
+                                                                statusMessage.classList.remove("text-danger");
+                                                                statusMessage.textContent = "جارٍ الإرسال...";        // حدث جاري الارسال
+                                                                var url = "https://api.telegram.org/bot" + token + "/sendMessage";
+                                                                var formData = new FormData();
+                                                                formData.append("chat_id", chatId);
+                                                                formData.append("text", message);
+                                                                formData.append("parse_mode", "MarkdownV2");
+                                                                fetch(url, {
+                                                                    method: "POST",
+                                                                    body: formData
+                                                                }).then(function (response) {
+                                                                    if (response.ok) {
+                                                                        statusMessage.classList.add("text-success");
+                                                                        statusMessage.textContent = "تم التسليم";
+
+                                                                    } else {
+                                                                        statusMessage.textContent = "فشل الإرسال";
+                                                                        statusMessage.classList.add("text-danger");
+                                                                    }
+                                                                })
+                                                                    .catch(function (error) {
+                                                                        statusMessage.textContent = "فشل الإرسال: " + "حاول مرة أخرى";
+                                                                        statusMessage.classList.add("text-danger");
+                                                                    });
+
+
+                                                            });
+                                                        </script>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-5" align="center">
+                                        <b><a href="#exampleModal" class="text-decoration-none" data-bs-toggle="modal"> شكوى / مقترح </a></b>
+
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <h5 class="text-white"><b>تواصل</b></h5>
+                        <h6> <a href="mailto: theyementraffic@gmail.com" class="text-decoration-none text-white">theyementraffic@gmail.com &ensp; <i class="fas fa-envelope"></i></a> </h6>
+                        <h6 class="mb-3"><a href="tel:+967776844885 " class="text-decoration-none text-white">+967 - 776844885 &ensp;<i class="fas fa-phone"></i></a></h6>
+                        <h5 class="text-white"><b>تابعنا</b></h5>
+                        <center>
+                            <ul class="menus text-white" style="margin-top: -15px">
+                                <li class="text-white">
+                                    <a href="https://n9.cl/cd5xs">
+                                        <i class="fab fa-facebook  link-primary"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.youtube.com/">
+                                        <i class="fab fa-youtube link-danger"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.snapchat.com/">
+                                        <i class="fab fa-telegram link-info"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.x.com/">
+                                        <i class="fab fa-twitter link-primary"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.linkedin.com/">
+                                        <i class="fab fa-linkedin link-info"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.instagram.com/">
+                                        <i class="fab fa-instagram link-danger "></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </center>
+
+                    </div>
+
+
+                </div>
+
+                <div class="row">
+                    <hr>
+                    <strong class="text-center">خريجي جامعة سيئون&copy 2024-2023
+                    </strong>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+
+</body>
+</html>
